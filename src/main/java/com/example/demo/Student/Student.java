@@ -2,15 +2,15 @@ package com.example.demo.Student;
 
 public class Student {
 
-    int id;
+    Integer id;
     String name;
 
-    public Student(int id, String name) {
+    public Student(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
