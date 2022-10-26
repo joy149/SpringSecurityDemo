@@ -3,7 +3,6 @@ package com.example.demo.ApplicationSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.example.demo.ApplicationSecurity.ApplicationUserPermission.COURSE_READ;
-import static com.example.demo.ApplicationSecurity.ApplicationUserPermission.COURSE_WRITE;
 import static com.example.demo.ApplicationSecurity.ApplicationUserRoles.*;
 
 @Configuration
@@ -40,7 +37,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .loginPage("/login").permitAll();
     }
 
     @Override
@@ -49,7 +47,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         UserDetails adminUser = User.builder()
                 .username("joybhowmick")
                 .password(passwordEncoder.encode("password"))
- //               .roles(STUDENT.name())
+                //               .roles(STUDENT.name())
                 .authorities(ADMIN.getGrantedAuthorities())
                 .build();
         UserDetails studentUser = User.builder()
